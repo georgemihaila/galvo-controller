@@ -34,7 +34,7 @@ private:
    * G2 X2 Y-2 I1.5 J-1.5 ; End Point and circle center specified (IJK method)
    * G2 X2 Y-2 R1.58114 ; End Point and radius specified
    */
-  void _g2();
+  void _g2(float x, float y, float i = 0, float j = 0, float r = 0);
 
   /**
    * @brief Executes a G3 Circular Move command (Counter-Clockwise Rotation).
@@ -48,7 +48,7 @@ private:
    * G3 X2 Y-2 I1.5 J-1.5 ; End Point and circle center specified (IJK method)
    * G3 X2 Y-2 R1.58114 ; End Point and radius specified
    */
-  void _g3();
+  void _g3(float x, float y, float i = 0, float j = 0, float r = 0);
 
   /**
    * @brief Executes a G4 Dwell command.
@@ -61,7 +61,7 @@ private:
    *
    * @param seconds The duration to dwell in seconds.
    */
-  void _g4();
+  void _g4(int seconds);
   /**
    * @brief G9 Exact Stop
    *
@@ -74,7 +74,7 @@ private:
    * G9
    * @endcode
    */
-  void _g9();
+  void _g9(int targetX, int targetY);
   /**
    * @brief Executes a G17 Plane Select command (XY Plane).
    *
@@ -113,7 +113,7 @@ private:
    * ; These commands would generate the following move sequence:
    * ; (0,0) -> (3,7) -> (5,10) -> (10,6)
    */
-  void _g90();
+  void _g90(int targetX, int targetY);
 
   /**
    * @brief Executes a G91 Incremental Distance Mode command.
@@ -130,7 +130,7 @@ private:
    * ; These commands would generate the following move sequence:
    * ; (0,0) -> (3,7) -> (8,17) -> (18,23)
    */
-  void _g91();
+  void _g91(int targetX, int targetY);
 
   /**
    * @brief Executes a G92 Redefine Coordinate System Set command.
@@ -180,7 +180,7 @@ private:
    * F1 = Enable flashing of status message
    * C1 = CloudBlue
    */
-  void _m09();
+  void _m09(String message, bool flash, String color);
 
   /**
    * @brief Executes an M13 Set QCW Laser Firing Parameters command.
@@ -191,7 +191,7 @@ private:
    * Example:
    * M13 P45 F10 W100
    */
-  void _m13();
+  void _m13(int peakPower, int pulseFrequency, int pulseWidth);
 
   /**
    * @brief Executes an M16 Gas On command.
@@ -216,7 +216,7 @@ private:
    * Example:
    * M29 S1 D0.28
    */
-  void _m29();
+  void _m29(float diameter);
 
   /**
    * @brief Executes an M30 Stop Program Execution command.
@@ -262,7 +262,7 @@ private:
    * M52 L1 ; Put Laser 1 to Pendant Mode
    * M52 L2 ; Put Laser 2 to Pendant Mode
    */
-  void _m52();
+  void _m52(String laser);
 
   /**
    * @brief Executes an M53 Laser External Mode command (Laser Reference Only).
@@ -273,7 +273,7 @@ private:
    * M53 L1 ; Put Welder 1 to External Mode
    * M53 L2 ; Put Laser 2 to External Mode
    */
-  void _m53();
+  void _m53(String laser);
 
   /**
    * @brief Executes an M54 Laser On command.
@@ -281,6 +281,13 @@ private:
    * The M54 command turns on the laser.
    */
   void _m54();
+
+  /**
+   * @brief Executes an M54 Laser Off command.
+   *
+   * The M55 command turns off the laser.
+   */
+  void _m55();
 
   /**
    * @brief Executes an M56 Guide Beam On command.
@@ -291,7 +298,7 @@ private:
    * M56 L1 ; Turn Guide Beam On for Laser 1
    * M56 L2 ; Turn Guide Beam On for Laser 2
    */
-  void _m56();
+  void _m56(String laser);
 
   /**
    * @brief Executes an M57 Guide Beam Off command.
@@ -302,7 +309,7 @@ private:
    * M57 L1 ; Turn Guide Beam Off for Laser 1
    * M57 L2 ; Turn Guide Beam Off for Laser 2
    */
-  void _m57();
+  void _m57(String laser);
 
   /**
    * @brief Executes an M60 Branch Shutter 1 Open command.
@@ -313,7 +320,7 @@ private:
    * M60 L1 ; Open Branch Shutter 1 On for Laser 1
    * M60 L2 ; Open Branch Shutter 1 On for Laser 2
    */
-  void _m60();
+  void _m60(String laser);
 
   /**
    * @brief Executes an M61 Branch Shutter 1 Close command.
@@ -324,7 +331,7 @@ private:
    * M61 L1 ; Close Branch Shutter 1 On for Laser 1
    * M61 L2 ; Close Branch Shutter 1 On for Laser 2
    */
-  void _m61();
+  void _m61(String laser);
 
   /**
    * @brief Executes an M98 Universal Wait for M-var to become equal to a
