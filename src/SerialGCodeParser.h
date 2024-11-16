@@ -1,6 +1,7 @@
 #pragma once
 #include "Laser.h"
 #include "XY2_100.h"
+#include "defs.h"
 #include <Arduino.h>
 
 /// @brief Acts as a middleman between serial port inputs, anm XY2-100 galvo and
@@ -13,6 +14,20 @@ private:
   Laser *_laser2;
   int _baudRate;
   bool _stopped;
+
+#pragma region Plane select
+#define XY 0
+#define ZX 1
+#define YZ 2
+  byte _currentPlane = XY;
+#pragma endregion
+
+#pragma region Operation mode
+  bool _absoluteMode = true;
+  int _x_origin = 0;
+  int _y_origin = 0;
+#pragma endregion
+
   void _parse(String command);
 #pragma region G / M Code definition
   /**
@@ -41,7 +56,7 @@ private:
    * G2 X2 Y-2 I1.5 J-1.5 ; End Point and circle center specified (IJK method)
    * G2 X2 Y-2 R1.58114 ; End Point and radius specified
    */
-  void _g2(float x, float y, float i = 0, float j = 0, float r = 0);
+  void _g2(double x, double y, double i, double j, double r);
 
   /**
    * @brief Executes a G3 Circular Move command (Counter-Clockwise Rotation).
@@ -55,7 +70,7 @@ private:
    * G3 X2 Y-2 I1.5 J-1.5 ; End Point and circle center specified (IJK method)
    * G3 X2 Y-2 R1.58114 ; End Point and radius specified
    */
-  void _g3(float x, float y, float i = 0, float j = 0, float r = 0);
+  void _g3(double x, double y, double i, double j, double r);
 
   /**
    * @brief Executes a G4 Dwell command.
@@ -120,7 +135,7 @@ private:
    * ; These commands would generate the following move sequence:
    * ; (0,0) -> (3,7) -> (5,10) -> (10,6)
    */
-  void _g90(int targetX, int targetY);
+  void _g90();
 
   /**
    * @brief Executes a G91 Incremental Distance Mode command.
@@ -137,7 +152,7 @@ private:
    * ; These commands would generate the following move sequence:
    * ; (0,0) -> (3,7) -> (8,17) -> (18,23)
    */
-  void _g91(int targetX, int targetY);
+  void _g91();
 
   /**
    * @brief Executes a G92 Redefine Coordinate System Set command.
@@ -150,7 +165,7 @@ private:
    * G92 X-1.0 Y-1.0 ; Set (6,6) as Home
    * G1 X0 Y0 ; Move to (6,6)
    */
-  void _g92();
+  void _g92(int newXRelative, int newYRelative);
 
   /**
    * @brief Executes an M00 Stop command.
@@ -226,7 +241,7 @@ private:
    * Example:
    * M29 S1 D0.28
    */
-  void _m29(float diameter);
+  void _m29(double diameter);
 
   /**
    * @brief Executes an M30 Stop Program Execution command.
@@ -362,6 +377,8 @@ private:
   void _set_gas(bool state);
   void _stop();
   void _resume();
+  void _drawCircle(double x, double y, double i, double j, double r,
+                   bool clockwise);
 #pragma endregion
 
 public:

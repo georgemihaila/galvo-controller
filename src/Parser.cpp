@@ -46,11 +46,11 @@ void SerialGCodeParser::_parse(String command) {
   } else if (command.startsWith("G19")) {
     _g19();
   } else if (command.startsWith("G90")) {
-    _g90(_extract_xy);
+    _g90();
   } else if (command.startsWith("G91")) {
-    _g91(_extract_xy);
+    _g91();
   } else if (command.startsWith("G92")) {
-    _g92();
+    _g92(_extract_xy);
   } else if (command.startsWith("M00")) {
     _m00();
   } else if (command.startsWith("M01")) {
