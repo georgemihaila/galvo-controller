@@ -2,22 +2,24 @@
 #include <Arduino.h>
 
 Laser::Laser(int pin, double power, unsigned int pulseFrequency,
-             double pulseWidth) {
+             double dutyCycle) {
   _pin = pin;
   pinMode(_pin, OUTPUT);
   setPower(power);
   setPulseFrequency(pulseFrequency);
-  _pulseWidth = pulseWidth;
+  _dutyCycle = dutyCycle;
   turnOff();
 }
 
-void Laser::turnOn() { analogWrite(_pin, _pulseWidth); }
+void Laser::turnOn() {
+  analogWrite(_pin, _dutyCycle * (pow(2, LASER_PULSE_BITNESS) - 1));
+}
 
 void Laser::turnOff() { analogWrite(_pin, 0); }
 
 void Laser::setPower(double power) { _power = power; }
 
-void Laser::setPulseFrequency(int pulseFrequency) {
+void Laser::setPulseFrequency(unsigned int pulseFrequency) {
   _pulseFrequency = pulseFrequency;
 }
 

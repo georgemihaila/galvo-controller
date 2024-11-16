@@ -111,13 +111,8 @@ void SerialGCodeParser::_m40() { _set_collet(true); }
 
 void SerialGCodeParser::_m41() { _set_collet(false); }
 
-void SerialGCodeParser::_m60(String laser) { _set_branch_shutter(laser, true); }
-
-void SerialGCodeParser::_m61(String laser) {
-  _set_branch_shutter(laser, false);
-}
-
 void SerialGCodeParser::_m16() { _set_gas(true); }
+
 void SerialGCodeParser::_m17() { _set_gas(false); }
 
 void SerialGCodeParser::_m00() { _stop(); }

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef LASER_PULSE_BITNESS
+#define LASER_PULSE_BITNESS 8
+#endif
 class Laser {
 private:
   int _pin;
@@ -20,7 +23,7 @@ public:
   void setPulseFrequency(unsigned int pulseFrequency);
   void setDutyCycle(double dutyCycle);
   double getPower();
-  int getPulseFrequency();
+  unsigned int getPulseFrequency();
   double getDutyCycle();
   double getPowerInJoulesPerSecond();
 };

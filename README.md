@@ -7,7 +7,8 @@
 
 ```cpp
 XY2_100 *galvo = new XY2_100(...);
-SerialGCodeParser *parser = new SerialGCodeParser(115200, galvo);
+Laser *laser new Laser(...);
+SerialGCodeParser *parser = new SerialGCodeParser(115200, galvo, laser);
 ```
 
 2. Make the parser listen continuously in the ```loop()``` method
