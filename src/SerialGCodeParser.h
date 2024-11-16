@@ -8,6 +8,90 @@
 /// one or two lasers. This implementation is based on the LW600A Laser Welder's
 /// GCode and MCode commands but shoule be compatibel with most implementations.
 class SerialGCodeParser {
+public:
+  SerialGCodeParser(int baudRate, XY2_100 *galvo, Laser *laser1);
+  SerialGCodeParser(int baudRate, XY2_100 *galvo, Laser *laser1, Laser *laser2);
+
+  /// @brief Listens for GCode commands on the serial port. In case nothing is
+  /// sent, the connected XY2-100 devices's clock will be ticked.
+  void listen();
+
+#pragma region GRBL
+
+#pragma region States
+
+  enum State {
+    Alarm,
+    Idle,
+    Jog,
+    Homing,
+    Check,
+    Cycle,
+    Hold,
+    SafetyDoor,
+    Sleep
+  };
+
+  State _state = State::Idle;
+
+#pragma endregion
+
+#pragma region Errors
+
+  enum ErrorCode {
+    CommandLetterNotFound = 1,
+    CommandValueInvalidOrMissing = 2,
+    DollarSignNotSupported = 3,
+    NegativeValueForExpectedPositiveValue = 4,
+    HomingNotEnabled = 5,
+    MinStepPulseMustBeGreaterThan3Microseconds = 6,
+    EEPROMReadFailUsingDefault = 7,
+    DollarSignOnlyValidWhenIdle = 8,
+    GCodeNotAllowedWhileInAlarmOrJogState = 9,
+    SoftLimitsRequireHoming = 10,
+    MaxCharactersPerLineExceeded = 11,
+    DollarSettingExceedsMaxStepRate = 12,
+    SafetyDoorOpened = 13,
+    BuildInfoOrStartupLineTooLong = 14,
+    JogTargetExceedsMachineTravel = 15,
+    JogCmdMissingOrProhibitedGCode = 16,
+    LaserModeRequiresPWMOutput = 17,
+    UnsupportedOrInvalidGCodeCommand = 20,
+    MultipleGCodeCommandsInModalGroup = 21,
+    FeedRateNotSetOrUndefined = 22,
+    GCodeCommandRequiresIntegerValue = 23,
+    MultipleGCodeCommandsUsingAxisWords = 24,
+    RepeatedGCodeWordInBlock = 25,
+    NoAxisWordsInCommandBlock = 26,
+    LineNumberValueInvalid = 27,
+    GCodeCmdMissingRequiredValueWord = 28,
+    G59xWCSNotSupported = 29,
+    G53OnlyValidWithG0AndG1 = 30,
+    UnneededAxisWordsInBlock = 31,
+    G2G3ArcsNeedInPlaneAxisWord = 32,
+    MotionCommandTargetInvalid = 33,
+    ArcRadiusValueInvalid = 34,
+    G2G3ArcsNeedInPlaneOffsetWord = 35,
+    UnusedValueWordsInBlock = 36,
+    G431OffsetNotAssignedToToolLengthAxis = 37,
+    ToolNumberGreaterThanMaxValue = 38
+  };
+
+  enum AlarmCode {
+    HardLimitTriggered = 1,
+    SoftLimitAlarm = 2,
+    ResetWhileInMotion = 3,
+    ProbeFailInitialState = 4,
+    ProbeFailNoContact = 5,
+    HomingFailCycleReset = 6,
+    HomingFailDoorOpened = 7,
+    HomingFailPullOffFailed = 8,
+    HomingFailLimitSwitchNotFound = 9
+  };
+
+#pragma endregion
+
+#pragma endregion
 private:
   XY2_100 *_galvo;
   Laser *_laser1;
@@ -392,11 +476,18 @@ private:
                    bool clockwise);
 #pragma endregion
 
-public:
-  SerialGCodeParser(int baudRate, XY2_100 *galvo, Laser *laser1);
-  SerialGCodeParser(int baudRate, XY2_100 *galvo, Laser *laser1, Laser *laser2);
+#pragma region GRBL
+#pragma region Errors
 
-  /// @brief Listens for GCode commands on the serial port. In case nothing is
-  /// sent, the connected XY2-100 devices's clock will be ticked.
-  void listen();
+  String _errorToString(ErrorCode code);
+
+  void _printError(ErrorCode code);
+#pragma endregion
+#pragma region Alarms
+
+  String _alarmToString(AlarmCode code);
+
+  void _printAlarm(AlarmCode code);
+#pragma endregion
+#pragma endregion
 };
