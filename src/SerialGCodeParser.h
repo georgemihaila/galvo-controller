@@ -1,13 +1,20 @@
 #pragma once
+#include "Laser.h"
 #include "XY2_100.h"
 #include <Arduino.h>
 
+/// @brief Acts as a middleman between serial port inputs, anm XY2-100 galvo and
+/// one or two lasers. This implementation is based on the LW600A Laser Welder's
+/// GCode and MCode commands but shoule be compatibel with most implementations.
 class SerialGCodeParser {
 private:
   XY2_100 *_galvo;
+  Laser *_laser1;
+  Laser *_laser2;
   int _baudRate;
+  bool _stopped;
   void _parse(String command);
-#pragma region GCode definition
+#pragma region G / M Code definition
   /**
    * @brief Executes a G1 Linear Move command.
    *
@@ -166,6 +173,9 @@ private:
    * M01 S1 ; Select message 1 to display in M01 popup message dialog
    */
   void _m01();
+
+  /// @brief Resumes the program execution.
+  void _m02();
 
   /**
    * @brief Executes an M09 Status Message Display command.
@@ -344,8 +354,19 @@ private:
 
 #pragma endregion
 
+#pragma region G / M Code helpers
+  void _set_guide_beam(String laser, bool state);
+  void _set_branch_shutter(String laser, bool state);
+  void _set_water(bool state);
+  void _set_collet(bool state);
+  void _set_gas(bool state);
+  void _stop();
+  void _resume();
+#pragma endregion
+
 public:
-  SerialGCodeParser(int baudRate, XY2_100 *galvo);
+  SerialGCodeParser(int baudRate, XY2_100 *galvo, Laser *laser1);
+  SerialGCodeParser(int baudRate, XY2_100 *galvo, Laser *laser1, Laser *laser2);
 
   /// @brief Listens for GCode commands on the serial port. In case nothing is
   /// sent, the connected XY2-100 devices's clock will be ticked.
