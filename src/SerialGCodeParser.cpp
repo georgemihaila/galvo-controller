@@ -12,11 +12,13 @@ SerialGCodeParser::SerialGCodeParser(int baudRate, XY2_100 *galvo,
   _stopped = false;
 
   Serial.begin(_baudRate);
+  Serial.println("Up");
 }
 
 void SerialGCodeParser::listen() {
   if (Serial.available() > 0) {
     String command = Serial.readStringUntil('\n');
+    Serial.println(command);
     _parse(command);
   } else {
     _galvo->tick();

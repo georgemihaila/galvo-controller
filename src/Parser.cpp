@@ -9,16 +9,34 @@ void SerialGCodeParser::_parse(String command) {
   auto extractValue = [&](char identifier) -> double {
     int index = command.indexOf(identifier);
     if (index != -1) {
-      int nextIndex = command.indexOf(' ', index + 1);
-      if (nextIndex == -1)
-        nextIndex = command.length();
+      int nextIndex = index + 1;
+      while (nextIndex < command.length() &&
+             (isDigit(command[nextIndex]) || command[nextIndex] == '.' ||
+              command[nextIndex] == '-')) {
+        nextIndex++;
+      }
       return command.substring(index + 1, nextIndex).toDouble();
+    }
+    if (identifier == 'R') {
+      int fIndex = command.indexOf('F');
+      if (fIndex != -1) {
+        int nextFIndex = fIndex + 1;
+        while (nextFIndex < command.length() &&
+               (isDigit(command[nextFIndex]) || command[nextFIndex] == '.' ||
+                command[nextFIndex] == '-')) {
+          nextFIndex++;
+        }
+        return command.substring(fIndex + 1, nextFIndex).toDouble();
+      }
+      return 0;
     }
     return 0;
   };
   // Nothing to see here, scroll down. A lot.
-  if (command.startsWith("G1")) {
-    _g1(command[1], command.substring(2).toInt());
+  if (command.startsWith("G0")) {
+    _g0(_extract_xy);
+  } else if (command.startsWith("G1")) {
+    _g1(command[3], extractValue(command[3]));
   } else if (command.startsWith("G2")) {
     _g2(_extract_xy, extractValue('I'), extractValue('J'), extractValue('R'));
   } else if (command.startsWith("G3")) {
@@ -45,6 +63,12 @@ void SerialGCodeParser::_parse(String command) {
     _g18();
   } else if (command.startsWith("G19")) {
     _g19();
+  }
+  // Scroll down for more.
+  else if (command.startsWith("G28")) {
+    _g28();
+  } else if (command.startsWith("G28.1")) {
+    _g28p1(_extract_xy);
   } else if (command.startsWith("G90")) {
     _g90();
   } else if (command.startsWith("G91")) {

@@ -1,4 +1,5 @@
 #include "SerialGCodeParser.h"
+#include "defs.h"
 
 #define _galvo_mode_adjusted_x                                                 \
   (_galvo->getX() + (_absoluteMode ? _x_origin : 0))
@@ -87,4 +88,20 @@ void SerialGCodeParser::_m52(String laser) {
 
 void SerialGCodeParser::_m53(String laser) {
   Serial.println("M53 not supported");
+}
+
+void SerialGCodeParser::_g0(int x, int y) {
+  _m54();
+  _galvo->setXY(x, y);
+  _m55();
+}
+
+void SerialGCodeParser::_g28() { _g0(_x_origin, _y_origin); }
+
+void SerialGCodeParser::_g28p1(int x, int y) {
+  bool currentAbsoluteMode = _absoluteMode;
+  _absoluteMode = true;
+  _x_origin = x;
+  _y_origin = y;
+  _absoluteMode = currentAbsoluteMode;
 }

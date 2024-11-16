@@ -30,6 +30,11 @@ private:
 
   void _parse(String command);
 #pragma region G / M Code definition
+
+  /// @brief Executes a simultaneous XY fast move command. During this move, the
+  /// laser is turned off.
+  void _g0(int x, int y);
+
   /**
    * @brief Executes a G1 Linear Move command.
    *
@@ -166,6 +171,12 @@ private:
    * G1 X0 Y0 ; Move to (6,6)
    */
   void _g92(int newXRelative, int newYRelative);
+
+  /// @brief Executes a G28 Home command.
+  void _g28();
+
+  /// @brief Executes a G28.1 set home command using absolute coordinates.
+  void _g28p1(int x, int y);
 
   /**
    * @brief Executes an M00 Stop command.
