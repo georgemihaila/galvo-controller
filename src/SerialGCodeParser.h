@@ -476,6 +476,10 @@ private:
                    bool clockwise);
 #pragma endregion
 
+  bool _parseGCode(String gcodeString);
+  bool _parseMCode(String mcodeString);
+  bool _parseGRBL(String commandString);
+
 #pragma region GRBL
 #pragma region Errors
 
@@ -488,6 +492,109 @@ private:
   String _alarmToString(AlarmCode code);
 
   void _printAlarm(AlarmCode code);
+#pragma endregion
+#pragma region Non G - code commands
+
+  /**
+   * @brief Display Grbl Settings.
+   */
+  void displaySettings();
+
+  /**
+   * @brief Change Grbl Setting x to val.
+   * @param x The setting number.
+   * @param val The value to set.
+   */
+  void changeSetting(int x, double val);
+
+  /**
+   * @brief View GCode Parameters.
+   */
+  void viewGCodeParameters();
+
+  /**
+   * @brief View GCode parser state.
+   */
+  void viewGCodeParserState();
+
+  /**
+   * @brief Toggle Check Gcode Mode.
+   */
+  void toggleCheckGCodeMode();
+
+  /**
+   * @brief Run Homing Cycle.
+   */
+  void runHomingCycle();
+
+  /**
+   * @brief Run Jogging Motion.
+   * @param gcode The jogging GCode command.
+   */
+  void runJoggingMotion(String gcode);
+
+  /**
+   * @brief Kill Alarm Lock state.
+   */
+  void killAlarmLock();
+
+  /**
+   * @brief View Build Info.
+   */
+  void viewBuildInfo();
+
+  /**
+   * @brief View saved start up code.
+   */
+  void viewSavedStartUpCode();
+
+  /**
+   * @brief Save Start-up GCode line.
+   * @param x The line number (0 or 1).
+   * @param line The GCode line to save.
+   */
+  void saveStartUpGCodeLine(int x, String line);
+
+  /**
+   * @brief Restores the Grbl settings to defaults.
+   */
+  void restoreSettingsToDefaults();
+
+  /**
+   * @brief Erases G54-G59 WCS offsets and G28/30 positions stored in EEPROM.
+   */
+  void eraseWCSOffsets();
+
+  /**
+   * @brief Clear and Load all data from EEPROM.
+   */
+  void clearAndLoadEEPROM();
+
+  /**
+   * @brief Enable Sleep mode.
+   */
+  void enableSleepMode();
+
+  /**
+   * @brief Soft Reset.
+   */
+  void softReset();
+
+  /**
+   * @brief Status report query.
+   */
+  void statusReportQuery();
+
+  /**
+   * @brief Cycle Start/Resume from Feed Hold, Door or Program pause.
+   */
+  void cycleStartResume();
+
+  /**
+   * @brief Feed Hold – Stop all motion.
+   */
+  void feedHold();
+
 #pragma endregion
 #pragma endregion
 };

@@ -117,3 +117,124 @@ void SerialGCodeParser::_printAlarm(AlarmCode code) {
   Serial.print("] ");
   Serial.println(_alarmToString(code));
 }
+
+void SerialGCodeParser::displaySettings() {
+  // Implementation to display Grbl settings
+  Serial.println("Displaying Grbl settings...");
+  // Add code to retrieve and display settings
+}
+
+void SerialGCodeParser::changeSetting(int x, double val) {
+  // Implementation to change a specific Grbl setting
+  Serial.print("Changing setting ");
+  Serial.print(x);
+  Serial.print(" to ");
+  Serial.println(val);
+  // Add code to change the setting
+}
+
+void SerialGCodeParser::viewGCodeParameters() {
+  // Implementation to view GCode parameters
+  Serial.println("Viewing GCode parameters...");
+  // Add code to retrieve and display GCode parameters
+}
+
+void SerialGCodeParser::viewGCodeParserState() {
+  // Implementation to view GCode parser state
+  Serial.println("Viewing GCode parser state...");
+  // Add code to retrieve and display GCode parser state
+}
+
+void SerialGCodeParser::toggleCheckGCodeMode() {
+  // Implementation to toggle check GCode mode
+  Serial.println("Toggling check GCode mode...");
+  // Add code to toggle the mode
+}
+
+void SerialGCodeParser::runHomingCycle() {
+  // Implementation to run homing cycle
+  Serial.println("Running homing cycle...");
+  // Add code to initiate homing cycle
+}
+
+void SerialGCodeParser::runJoggingMotion(String gcode) {
+  // Implementation to run jogging motion
+  Serial.print("Running jogging motion with GCode: ");
+  Serial.println(gcode);
+  // Add code to execute jogging motion
+}
+
+void SerialGCodeParser::killAlarmLock() {
+  // Implementation to kill alarm lock state
+  Serial.println("Killing alarm lock state...");
+  // Add code to kill alarm lock
+}
+
+void SerialGCodeParser::viewBuildInfo() {
+  // Implementation to view build info
+  Serial.println("Viewing build info...");
+  // Add code to retrieve and display build info
+}
+
+void SerialGCodeParser::viewSavedStartUpCode() {
+  // Implementation to view saved start-up code
+  Serial.println("Viewing saved start-up code...");
+  // Add code to retrieve and display start-up code
+}
+
+void SerialGCodeParser::saveStartUpGCodeLine(int x, String line) {
+  // Implementation to save start-up GCode line
+  Serial.print("Saving start-up GCode line ");
+  Serial.print(x);
+  Serial.print(": ");
+  Serial.println(line);
+  // Add code to save the start-up GCode line
+}
+
+void SerialGCodeParser::restoreSettingsToDefaults() {
+  // Implementation to restore settings to defaults
+  Serial.println("Restoring settings to defaults...");
+  // Add code to restore settings
+}
+
+void SerialGCodeParser::eraseWCSOffsets() {
+  // Implementation to erase WCS offsets
+  Serial.println("Erasing WCS offsets...");
+  // Add code to erase WCS offsets
+}
+
+void SerialGCodeParser::clearAndLoadEEPROM() {
+  // Implementation to clear and load all data from EEPROM
+  Serial.println("Clearing and loading EEPROM...");
+  // Add code to clear and load EEPROM
+}
+
+void SerialGCodeParser::enableSleepMode() {
+  // Implementation to enable sleep mode
+  Serial.println("Enabling sleep mode...");
+  // Add code to enable sleep mode
+}
+
+void SerialGCodeParser::softReset() {
+  // Implementation to perform a soft reset
+  Serial.println("Performing soft reset...");
+  // Add code to perform soft reset
+}
+
+void SerialGCodeParser::statusReportQuery() {
+  // Implementation to query status report
+  Serial.println("Querying status report...");
+  // Add code to query status report
+}
+
+void SerialGCodeParser::cycleStartResume() {
+  // Implementation to cycle start/resume
+  Serial.println("Cycle start/resume...");
+  // Add code to start or resume cycle
+}
+
+void SerialGCodeParser::feedHold() {
+  // Implementation to feed hold (stop all motion)
+  Serial.println("Feed hold - stopping all motion...");
+  // Add code to stop all motion
+}

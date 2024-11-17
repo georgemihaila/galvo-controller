@@ -124,6 +124,44 @@ void SerialGCodeParser::_parse(String command) {
     _m61(_extract_laser_as_only_argument);
   } else if (command.startsWith("M98")) {
     _m98();
+  } else if (command.startsWith("displaySettings")) {
+    displaySettings();
+  } else if (command.startsWith("changeSetting")) {
+    Serial.println("Not implemented");
+  } else if (command.startsWith("viewGCodeParameters")) {
+    viewGCodeParameters();
+  } else if (command.startsWith("viewGCodeParserState")) {
+    viewGCodeParserState();
+  } else if (command.startsWith("toggleCheckGCodeMode")) {
+    toggleCheckGCodeMode();
+  } else if (command.startsWith("runHomingCycle")) {
+    runHomingCycle();
+  } else if (command.startsWith("runJoggingMotion")) {
+    Serial.println("Not implemented");
+  } else if (command.startsWith("killAlarmLock")) {
+    killAlarmLock();
+  } else if (command.startsWith("viewBuildInfo")) {
+    viewBuildInfo();
+  } else if (command.startsWith("viewSavedStartUpCode")) {
+    viewSavedStartUpCode();
+  } else if (command.startsWith("saveStartUpGCodeLine")) {
+    Serial.println("Not implemented");
+  } else if (command.startsWith("restoreSettingsToDefaults")) {
+    restoreSettingsToDefaults();
+  } else if (command.startsWith("eraseWCSOffsets")) {
+    eraseWCSOffsets();
+  } else if (command.startsWith("clearAndLoadEEPROM")) {
+    clearAndLoadEEPROM();
+  } else if (command.startsWith("enableSleepMode")) {
+    enableSleepMode();
+  } else if (command.startsWith("softReset")) {
+    softReset();
+  } else if (command.startsWith("statusReportQuery")) {
+    statusReportQuery();
+  } else if (command.startsWith("cycleStartResume")) {
+    cycleStartResume();
+  } else if (command.startsWith("feedHold")) {
+    feedHold();
   } else {
     Serial.println("Unknown command: " + command);
   }
