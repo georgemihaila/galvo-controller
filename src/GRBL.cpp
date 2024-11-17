@@ -151,11 +151,7 @@ void SerialGCodeParser::toggleCheckGCodeMode() {
   // Add code to toggle the mode
 }
 
-void SerialGCodeParser::runHomingCycle() {
-  // Implementation to run homing cycle
-  Serial.println("Running homing cycle...");
-  // Add code to initiate homing cycle
-}
+void SerialGCodeParser::runHomingCycle() { _g28(); }
 
 void SerialGCodeParser::runJoggingMotion(String gcode) {
   // Implementation to run jogging motion

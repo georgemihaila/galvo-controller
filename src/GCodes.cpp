@@ -45,7 +45,7 @@ void SerialGCodeParser::_g3(double x, double y, double i = 0, double j = 0,
   _drawCircle(x, y, i, j, r, false);
 }
 
-void SerialGCodeParser::_g4(int seconds) { delay(seconds * 1000); }
+void SerialGCodeParser::_g4(double seconds) { delay(seconds * 1000); }
 
 void SerialGCodeParser::_g9(int x, int y) { _galvo->setXY(x, y); }
 

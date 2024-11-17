@@ -16,11 +16,26 @@ SerialGCodeParser::SerialGCodeParser(int baudRate, XY2_100 *galvo,
 }
 
 void SerialGCodeParser::listen() {
-  if (Serial.available() > 0) {
+  while (Serial.available() > 0) {
     String command = Serial.readStringUntil('\n');
-    Serial.println(command);
-    _parse(command);
-  } else {
-    _galvo->tick();
+    while (Serial.available() > 0) {
+      command += "\n" + Serial.readStringUntil('\n');
+    }
+    int start = 0;
+    int end = command.indexOf('\n');
+    while (end != -1) {
+      String singleCommand = command.substring(start, end);
+      Serial.println(singleCommand);
+      _parse(singleCommand);
+      start = end + 1;
+      end = command.indexOf('\n', start);
+    }
+    // Handle the last command if there is no trailing newline
+    if (start < command.length()) {
+      String singleCommand = command.substring(start);
+      Serial.println(singleCommand);
+      _parse(singleCommand);
+    }
   }
+  _galvo->tick();
 }

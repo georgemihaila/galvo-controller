@@ -124,43 +124,43 @@ void SerialGCodeParser::_parse(String command) {
     _m61(_extract_laser_as_only_argument);
   } else if (command.startsWith("M98")) {
     _m98();
-  } else if (command.startsWith("displaySettings")) {
+  } else if (command.equalsIgnoreCase("$$")) {
     displaySettings();
-  } else if (command.startsWith("changeSetting")) {
+  } else if (command.startsWith("$") && command.indexOf('=') != -1) {
     Serial.println("Not implemented");
-  } else if (command.startsWith("viewGCodeParameters")) {
+  } else if (command.equalsIgnoreCase("$#")) {
     viewGCodeParameters();
-  } else if (command.startsWith("viewGCodeParserState")) {
+  } else if (command.equalsIgnoreCase("$G")) {
     viewGCodeParserState();
-  } else if (command.startsWith("toggleCheckGCodeMode")) {
+  } else if (command.equalsIgnoreCase("$C")) {
     toggleCheckGCodeMode();
-  } else if (command.startsWith("runHomingCycle")) {
+  } else if (command.equalsIgnoreCase("$H")) {
     runHomingCycle();
-  } else if (command.startsWith("runJoggingMotion")) {
+  } else if (command.startsWith("$J=")) {
     Serial.println("Not implemented");
-  } else if (command.startsWith("killAlarmLock")) {
+  } else if (command.equalsIgnoreCase("$X")) {
     killAlarmLock();
-  } else if (command.startsWith("viewBuildInfo")) {
+  } else if (command.equalsIgnoreCase("$I")) {
     viewBuildInfo();
-  } else if (command.startsWith("viewSavedStartUpCode")) {
+  } else if (command.equalsIgnoreCase("$N")) {
     viewSavedStartUpCode();
-  } else if (command.startsWith("saveStartUpGCodeLine")) {
+  } else if (command.startsWith("$N")) {
     Serial.println("Not implemented");
-  } else if (command.startsWith("restoreSettingsToDefaults")) {
+  } else if (command.equalsIgnoreCase("$RST=$")) {
     restoreSettingsToDefaults();
-  } else if (command.startsWith("eraseWCSOffsets")) {
+  } else if (command.equalsIgnoreCase("$RST=#")) {
     eraseWCSOffsets();
-  } else if (command.startsWith("clearAndLoadEEPROM")) {
+  } else if (command.equalsIgnoreCase("$RST=*")) {
     clearAndLoadEEPROM();
-  } else if (command.startsWith("enableSleepMode")) {
+  } else if (command.equalsIgnoreCase("$SLP")) {
     enableSleepMode();
-  } else if (command.startsWith("softReset")) {
+  } else if (command.equalsIgnoreCase("\x18")) { // Ctrl-x
     softReset();
-  } else if (command.startsWith("statusReportQuery")) {
+  } else if (command.equalsIgnoreCase("?")) {
     statusReportQuery();
-  } else if (command.startsWith("cycleStartResume")) {
+  } else if (command.equalsIgnoreCase("~")) {
     cycleStartResume();
-  } else if (command.startsWith("feedHold")) {
+  } else if (command.equalsIgnoreCase("!")) {
     feedHold();
   } else {
     Serial.println("Unknown command: " + command);

@@ -172,7 +172,8 @@ private:
    *
    * @param seconds The duration to dwell in seconds.
    */
-  void _g4(int seconds);
+  void _g4(double seconds);
+
   /**
    * @brief G9 Exact Stop
    *
