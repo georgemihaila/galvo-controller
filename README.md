@@ -19,4 +19,4 @@ void loop() {
 }
 ```
 
-That's all.
+That's all. Just connect to the serial port and feed it G codes. It will echo all commands by default.
