@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+release_cache
 # Compiled Object files
 *.slo
 *.lo
